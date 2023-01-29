@@ -14,6 +14,10 @@ echo "mongouser" | base64
 
 echo "bW9uZ291c2Vy" | base64 --decode
 
+## External link (temporary)
+
+minikube service frontendapp-service --url
+
 ## Reference
 
 https://gitlab.com/nanuchi/k8s-in-1-hour/-/tree/master/
