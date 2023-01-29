@@ -15,19 +15,37 @@ spec:
         app: frontendapp
     spec:
       containers:
-      - name: frontendapp
-        image: nanajanashia/k8s-demo-app:v1.0
-        ports:
-        - containerPort: 3000
+        - name: frontendapp
+          image: nanajanashia/k8s-demo-app:v1.0
+          ports:
+            - containerPort: 3000
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: mongo-user
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: mongo-password
+            - name: DB_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: mongodb-config
+                  key: mongodb-url
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: frontendapp-service
 spec:
+  type: NodePort
   selector:
-   app: frontendapp
+    app: frontendapp
   ports:
     - protocol: TCP
       port: 3000
       targetPort: 3000
+      nodePort: 30100
