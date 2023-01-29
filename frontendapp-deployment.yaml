@@ -20,12 +20,12 @@ spec:
           ports:
             - containerPort: 3000
           env:
-            - name: MONGO_INITDB_ROOT_USERNAME
+            - name: USER_NAME
               valueFrom:
                 secretKeyRef:
                   name: mongodb-secret
                   key: mongo-user
-            - name: MONGO_INITDB_ROOT_PASSWORD
+            - name: USER_PWD
               valueFrom:
                 secretKeyRef:
                   name: mongodb-secret
@@ -48,4 +48,4 @@ spec:
     - protocol: TCP
       port: 3000
       targetPort: 3000
-      nodePort: 30100
+      nodePort: 30000
